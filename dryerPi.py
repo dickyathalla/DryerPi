@@ -9,7 +9,7 @@ import logging
 import configparser
 
 
-vibrationSensor = DigitalInputDevice(17)
+vibrationSensor = DigitalInputDevice(14)
 logging.basicConfig(filename="logfile.log", level=logging.INFO)
 configparser = configparser.ConfigParser()
 configparser.read('config.txt')
