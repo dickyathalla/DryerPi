@@ -24,7 +24,7 @@ def vibration():
         sleep(10)
         if vibrationSensor.is_active:
             logging.info(
-                "Dryer motion detected after sleeping for 10 seconds, exiting function: %s", datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
+                "Detected motion after 10 sec, exiting function:: %s", datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
             return
         else:
             logging.info("Sleeping for 5 sec... %s",
