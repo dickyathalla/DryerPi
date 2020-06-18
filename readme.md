@@ -21,15 +21,15 @@ Once you have all the parts you will need to wire the SW 420 sensor to your Rasp
 We will wire the SW420 Sensor up to the following pins
  - Pin 4 `5v`
  - Pin 6 `GND`
- - Ping 8 `GPIO14`
+ - Pin 8 `GPIO14`
 
 ![Raspberry Pi GPIO](https://webofthings.org/wp-content/uploads/2016/10/pi-gpio.png)
 
 
 My SW420 sensor is wired up as follows: 
- - `Switch Signal Output` -> `5v`
- - `Gnd` -> `GND`
- - `3.3v-5v` -> `GPIO 14`
+ - `Switch Signal Output` -> `Pin 4 5v`
+ - `Gnd` -> `Pin 6 GND`
+ - `3.3v-5v` -> `Pin 8 GPIO 14`
 
 ![SW420](https://img.banggood.com/thumb/water/oaupload/banggood/images/4E/67/1af57321-cb58-4930-b063-40a2fcc2ecb7.jpg)
 
