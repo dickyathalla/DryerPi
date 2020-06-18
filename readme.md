@@ -6,6 +6,7 @@
 1. [Running](#Running)
 1. [Logging](#Logging)
 
+### I referenced [Shmoopty's Appliance Monitor](https://github.com/Shmoopty/rpi-appliance-monitor) project for this version of DryerPi. I pulled out parts of the code that I found would be useful for my own purposes.
 
 # Setup
 To set this project up on your own raspberry pi you will need the following parts:
@@ -58,6 +59,8 @@ rec_email =
 password = 
 port = 587
 smtp = smtp.gmail.com
+[Configuration]
+stop_time = 
 ```
 
 `sender_email` should be the email address you are using to send the emails
