@@ -12,7 +12,14 @@ import threading
 vibrationSensor = DigitalInputDevice(14)
 logging.basicConfig(filename="logfile.log", level=logging.INFO)
 configparser = configparser.ConfigParser()
-configparser.read('config.txt')
+
+try:
+    configparser.read('/home/pi/DryerPi/config.txt')
+    logging.info("Config file loaded: %s" %
+                 datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
+except Exception as e:
+    logging.error("Unable to load configuration file: %s :%s" %
+                  (e, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
 
 credentials = 'Credentials'
 config = 'Configuration'
@@ -59,7 +66,8 @@ def email():
         logging.info("Email has been sent to %s : %s" %
                      (rec_email, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
     except Exception as e:
-        logging.error("Unable to send email %s : %s" % (e, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
+        logging.error("Unable to send email %s : %s" % (
+            e, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
 
     global isActive
     isActive = False

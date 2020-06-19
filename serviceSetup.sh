@@ -10,7 +10,7 @@ After=multi-user.target
 
 [Service]
 Type=idle
-ExecStart=/usr/bin/python3 /home/pi/DryerPi/dryerPi.py
+ExecStart=/usr/bin/python3 /home/pi/DryerPi/dryerPi.py > /home/pi/DryerPi/dryerPi.log > 2&1
 
 [Install]
 WantedBy=multi-user.target
