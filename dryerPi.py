@@ -49,15 +49,18 @@ def email():
     rec_email = recEmail
     password = passwd
     msg = '''Dryer finished'''
+    try:
+        server = smtplib.SMTP(smtp, port)
+        server.starttls()
+        server.login(sender_email, password)
+        logging.info("Login success %s",
+                     datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
+        server.sendmail(sender_email, rec_email, msg)
+        logging.info("Email has been sent to %s : %s" %
+                     (rec_email, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
+    except Exception as e:
+        logging.error("Unable to send email %s : %s" % (e, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
 
-    server = smtplib.SMTP(smtp, port)
-    server.starttls()
-    server.login(sender_email, password)
-    logging.info("Login success %s",
-                 datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
-    server.sendmail(sender_email, rec_email, msg)
-    logging.info("Email has been sent to %s : %s" %
-                 (rec_email, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
     global isActive
     isActive = False
 
