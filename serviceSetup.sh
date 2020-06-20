@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Creating new service DryerPi.service"
+echo Creating new service DryerPi.service
 sudo touch /lib/systemd/system/DryerPi.service
 
 sudo cat > /lib/systemd/system/DryerPi.service << EOF
@@ -19,10 +19,13 @@ EOF
 
 sudo chmod 644 /lib/systemd/system/DryerPi.service
 
-echo "Restarting daemon service"
+echo Restarting daemon service
 sudo systemctl daemon-reload
 pid=$!
 wait $!
 
-echo "Enabling DryerPi.service"
+echo Enabling DryerPi.service
 sudo systemctl enable DryerPi.service
+
+echo Starting DryerPi.service
+sudo service DryerPi start

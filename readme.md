@@ -5,6 +5,7 @@
 1. [Configuration File](#Configuration-File)
 1. [Running](#Running)
 1. [Logging](#Logging)
+1. [Running at Boot](#Running-at-Boot)
 
 ### I referenced [Shmoopty's Appliance Monitor](https://github.com/Shmoopty/rpi-appliance-monitor) project for this version of DryerPi. I pulled out parts of the code that I found would be useful for my own purposes.
 
@@ -71,7 +72,7 @@ stop_time =
 
 
 # Logging
-When you run the application the Raspberry Pi will create a log file, `logfile.log` in the `DryerPi` directory. These will have a timestamp when each event was triggered for assistance with debugging. 
+When you run the application the Raspberry Pi will create a log file, `dryerPi.log` in the `DryerPi` directory. These will have a timestamp when each event was triggered for assistance with debugging. 
 
 Example Logfile:
 ```
@@ -81,3 +82,24 @@ INFO:root:Dryer has stopped, sending email: 17:19:14- Jun 17 2020
 INFO:root:Login success 17:19:14- Jun 17 2020
 INFO:root:Email has been sent to mymail@email.com : 17:19:15- Jun 17 2020
 ```
+
+# Running at Boot
+
+If you want to have this application run every time your Raspberry Pi boots you will need to do the following setup if you have not already.
+
+
+ - Enable ssh
+ - Enable `Console Autologin` in Raspi-Config
+ - Run the `service.sh` script included in the respository.
+
+The `service.sh` file will create a system service on your Raspberry Pi and launch the DryerPi service every time the Raspberry Pi boots. To stop the service, you can type the following command: 
+```
+sudo service DryerPi stop
+```
+If you want to remove the service simply delete the `DryerPi.service` file from the `/lib/systemd/system/` directory and restart your service daemon. 
+
+```
+sudo systemctl daemon-reload
+```
+
+
