@@ -25,6 +25,8 @@ We will wire the SW420 Sensor up to the following pins
  - Pin 6 `GND`
  - Pin 8 `GPIO14`
 
+**PLEASE NOTE** I positioned bent the pins of the sensor to be straight and when I connected it to the pi I went from below the pi. This was to ensure I could access the adjustment screw on the sensor.
+
 ![Raspberry Pi GPIO](https://webofthings.org/wp-content/uploads/2016/10/pi-gpio.png)
 
 
