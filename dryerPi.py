@@ -5,18 +5,20 @@ import time
 import smtplib
 import ssl
 import datetime
+import logging
 import configparser
 import threading
 
 vibrationSensor = DigitalInputDevice(14)
+logging.basicConfig(filename="dryerPi.log", level=logging.INFO)
 configparser = configparser.ConfigParser()
 
 try:
-    configparser.read('/home/pi/DryerPi/config.txt')
-    print("Config file loaded: %s" %
+    configparser.read('config.txt')
+    logging.info("Config file loaded: %s" %
                  datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
 except Exception as e:
-    print("Unable to load configuration file: %s :%s" %
+    logging.error("Unable to load configuration file: %s :%s" %
                   (e, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
 
 credentials = 'Credentials'
@@ -27,7 +29,7 @@ def vibration(x):
     global isVibrating
     global vibrationStartTime
     global vibrationEndTime
-    print("Detected vibration: %s",
+    logging.info("Detected vibration: %s",
                  datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
     vibrationEndTime = time.time()
     global isActive
@@ -42,7 +44,7 @@ def checkVibration():
     now = time.time()
     global isVibrating
     if not isVibrating and isActive and now - vibrationEndTime > stopTime:
-        print("Sending email : %s",
+        logging.info("Sending email : %s",
                      datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
         email()
     isVibrating = False
@@ -58,13 +60,13 @@ def email():
         server = smtplib.SMTP(smtp, port)
         server.starttls()
         server.login(sender_email, password)
-        print("Login success %s",
+        logging.info("Login success %s",
                      datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
         server.sendmail(sender_email, rec_email, msg)
-        print("Email has been sent to %s : %s" %
+        logging.info("Email has been sent to %s : %s" %
                      (rec_email, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
     except Exception as e:
-        print("Unable to send email %s : %s" % (
+        logging.error("Unable to send email %s : %s" % (
             e, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
 
     global isActive
