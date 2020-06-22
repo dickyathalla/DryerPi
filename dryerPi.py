@@ -30,8 +30,6 @@ def vibration(x):
     global vibrationStartTime
     global vibrationEndTime
     vibrationEndTime = time.time()
-    global isActive
-    isActive = True
     if not isVibrating:
         vibrationStartTime = vibrationEndTime
         isVibrating = True
@@ -48,7 +46,7 @@ def checkVibration():
     now = time.time()
     global isVibrating
     deltaTime = vibrationEndTime - vibrationStartTime
-    if isVibrating and deltaTime > startTimer:
+    if isVibrating and deltaTime > startTimer and not isActive:
         setActive()
     if not isVibrating and isActive and now - vibrationEndTime > stopTime:
         logging.info("Sending email : %s",
