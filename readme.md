@@ -64,6 +64,7 @@ port = 587
 smtp = smtp.gmail.com
 [Configuration]
 stop_time = 
+start_time =
 ```
 
 `sender_email` should be the email address you are using to send the emails
