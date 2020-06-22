@@ -29,20 +29,27 @@ def vibration(x):
     global isVibrating
     global vibrationStartTime
     global vibrationEndTime
-    logging.info("Detected vibration: %s",
-                 datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
     vibrationEndTime = time.time()
     global isActive
     isActive = True
     if not isVibrating:
         vibrationStartTime = vibrationEndTime
         isVibrating = True
-        isActive = True
+
+
+def setActive():
+    logging.info("Appliance is active: %s",
+                 datetime.datetime.now().strftime("%H:%M:%S - %b %d %y"))
+    global isActive
+    isActive = True
 
 
 def checkVibration():
     now = time.time()
     global isVibrating
+    deltaTime = vibrationEndTime - vibrationStartTime
+    if isVibrating and deltaTime > startTimer:
+        setActive()
     if not isVibrating and isActive and now - vibrationEndTime > stopTime:
         logging.info("Sending email : %s",
                      datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
@@ -84,6 +91,7 @@ recEmail = configparser[credentials]['rec_email']
 port = configparser[credentials]['port']
 smtp = configparser[credentials]['smtp']
 stopTime = int(configparser[config]['stop_time'])
+startTimer = int(configparser[config]['start_time'])
 
 vibrationSensor.when_activated = vibration
 threading.Timer(1, checkVibration).start()
