@@ -52,7 +52,7 @@ def checkVibration():
         logging.info("Sending email : %s",
                      datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
         email()
-    isVibrating = False
+    isVibrating = vibrationStartTime - vibrationEndTime < 2
     threading.Timer(1, checkVibration).start()
 
 
