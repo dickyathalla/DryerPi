@@ -14,7 +14,7 @@ logging.basicConfig(filename="dryerPi.log", level=logging.INFO)
 configparser = configparser.ConfigParser()
 
 try:
-    configparser.read('config.txt')
+    configparser.read('/home/pi/DryerPi/config.txt')
     logging.info("Config file loaded: %s" %
                  datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
 except Exception as e:
