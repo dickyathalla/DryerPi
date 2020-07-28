@@ -10,7 +10,7 @@ import configparser
 import threading
 
 vibrationSensor = DigitalInputDevice(14)
-logging.basicConfig(filename="dryerPi.log", level=logging.INFO)
+logging.basicConfig(filename="/home/pi/DryerPi/dryerPi.log", level=logging.INFO)
 configparser = configparser.ConfigParser()
 
 try:
@@ -48,28 +48,26 @@ def checkVibration():
     deltaTime = vibrationEndTime - vibrationStartTime
     if isVibrating and deltaTime > startTimer and not isActive:
         setActive()
-    if not isVibrating and isActive and now - vibrationEndTime > stopTime:
+    if not isVibrating and isActive and (now - vibrationEndTime) > stopTime:
         logging.info("Sending email : %s",
                      datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
         email()
-    isVibrating = vibrationStartTime - vibrationEndTime < 2
+    isVibrating = now - vibrationEndTime < 2
     threading.Timer(1, checkVibration).start()
 
 
 def email():
-    sender_email = sendEmail
-    rec_email = recEmail
-    password = passwd
-    msg = '''Dryer finished'''
+    message = "Dryer finished"
+    msg = message
     try:
         server = smtplib.SMTP(smtp, port)
         server.starttls()
-        server.login(sender_email, password)
+        server.login(sendEmail, passwd)
         logging.info("Login success %s",
                      datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y"))
-        server.sendmail(sender_email, rec_email, msg)
+        server.sendmail(sendEmail, recEmail, msg)
         logging.info("Email has been sent to %s : %s" %
-                     (rec_email, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
+                     (recEmail, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
     except Exception as e:
         logging.error("Unable to send email %s : %s" % (
             e, datetime.datetime.now().strftime("%H:%M:%S- %b %d %Y")))
